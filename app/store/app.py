@@ -109,7 +109,7 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>Terraform Mug</h3>
                     <p>Infrastructure as Coffee.</p>
-                    <div class="product-price">$15.00</div>
+                    <div class="product-price">$99.99</div>
                 </div>
                 <div class="product-card">
                     <h3>AWS Sticker Pack</h3>
