@@ -15,6 +15,7 @@ spec:
       containers:
       - name: chatbot
         image: harshshahdeo/chatbot:latest
+        imagePullPolicy: Always             # <--- ADDED THIS
         ports:
         - containerPort: 5001
 ---
@@ -46,6 +47,7 @@ spec:
       containers:
       - name: store
         image: harshshahdeo/store:latest
+        imagePullPolicy: Always             # <--- ADDED THIS (Forces the price update!)
         ports:
         - containerPort: 5000
         env:
