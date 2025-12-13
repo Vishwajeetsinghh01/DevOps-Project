@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  chatbot:
+    build: ./app/chatbot
+    ports:
+      - "5001:5001"
+    networks:
+      - ecommerce-net
+    environment:
+      - FLASK_DEBUG=1
+
+  store:
+    build: ./app/store
+    ports:
+      - "5000:5000"
+    networks:
+      - ecommerce-net
+    environment:
+      - CHATBOT_URL=http://chatbot:5001
+      - FLASK_DEBUG=1
+    depends_on:
+      - chatbot
+
+networks:
+  ecommerce-net:
+    driver: bridge
