@@ -1,0 +1,54 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push Chatbot
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/chatbot:latest ./app/chatbot
+        docker push ${{ secrets.DOCKER_USERNAME }}/chatbot:latest
+
+    - name: Build and Push Store
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/store:latest ./app/store
+        docker push ${{ secrets.DOCKER_USERNAME }}/store:latest
+
+    # --- THIS IS THE NEW PART ---
+    - name: Copy Deployment Blueprint to Server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "deployment.yaml"
+        target: "/home/ubuntu/"
+    # -----------------------------
+
+    - name: Deploy to Kubernetes
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          # Apply the blueprint we just copied
+          kubectl apply -f /home/ubuntu/deployment.yaml
+          
+          # Restart the apps to download the new code
+          kubectl rollout restart deployment/chatbot
+          kubectl rollout restart deployment/store
