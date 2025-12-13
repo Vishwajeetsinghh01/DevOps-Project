@@ -97,7 +97,7 @@ DASHBOARD_PAGE = """
 
             <div class="product-grid">
                 <div class="product-card">
-                    <h3>Kubernetes Hoodie</h3>
+                    <h3>"SUPER K8S HOODIE"</h3>
                     <p>Deploy in comfort.</p>
                     <div class="product-price">$20.00</div>
                 </div>
