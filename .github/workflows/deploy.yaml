@@ -28,7 +28,6 @@ jobs:
         docker build -t ${{ secrets.DOCKER_USERNAME }}/store:latest ./app/store
         docker push ${{ secrets.DOCKER_USERNAME }}/store:latest
 
-    # --- THIS IS THE NEW PART ---
     - name: Copy Deployment Blueprint to Server
       uses: appleboy/scp-action@master
       with:
@@ -37,7 +36,6 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: "deployment.yaml"
         target: "/home/ubuntu/"
-    # -----------------------------
 
     - name: Deploy to Kubernetes
       uses: appleboy/ssh-action@master
@@ -52,7 +50,14 @@ jobs:
           # 2. Point kubectl to the config
           export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
           
-          # 3. Deploy
+          # 3. Apply the Blueprint
           kubectl apply -f /home/ubuntu/deployment.yaml
-          kubectl rollout restart deployment/chatbot
-          kubectl rollout restart deployment/store
+          
+          # 4. THE HAMMER: Kill old pods directly 🔨
+          # This forces K8s to download the new code immediately
+          kubectl delete pods -l app=store
+          kubectl delete pods -l app=chatbot
+          
+          # 5. Wait 10 seconds and check status
+          sleep 10
+          kubectl get pods
