@@ -46,9 +46,13 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          # Apply the blueprint we just copied
-          kubectl apply -f /home/ubuntu/deployment.yaml
+          # 1. UNLOCK the config file (This fixes the Permission Denied error)
+          sudo chmod 644 /etc/rancher/k3s/k3s.yaml
           
-          # Restart the apps to download the new code
+          # 2. Point kubectl to the config
+          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+          
+          # 3. Deploy
+          kubectl apply -f /home/ubuntu/deployment.yaml
           kubectl rollout restart deployment/chatbot
           kubectl rollout restart deployment/store
