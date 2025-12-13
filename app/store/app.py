@@ -99,7 +99,7 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>Kubernetes Hoodie</h3>
                     <p>Deploy in comfort.</p>
-                    <div class="product-price">$45.00</div>
+                    <div class="product-price">$20.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Docker Cap</h3>
