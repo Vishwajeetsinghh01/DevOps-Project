@@ -104,7 +104,7 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>Docker Cap</h3>
                     <p>Containerize your head.</p>
-                    <div class="product-price">$25.00</div>
+                    <div class="product-price">$50.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Terraform Mug</h3>
