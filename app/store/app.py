@@ -116,6 +116,12 @@ DASHBOARD_PAGE = """
                     <p>Stick to the cloud.</p>
                     <div class="product-price">$5.00</div>
                 </div>
+                <div class="product-card">
+                    <h3>CI/CD T-Shirt</h3>
+                    <p>Automate your wardrobe changes.</p>
+                    <div class="product-price">$35.00</div>
+                    <div class="product-actions"><button class="add-to-cart-btn" onclick="event.stopPropagation(); alert('Added to cart!')">🛒 Add to Cart</button></div>
+                </div>
             </div>
         </div>
     </div>
