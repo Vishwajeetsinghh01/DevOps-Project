@@ -99,28 +99,27 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>"SUPER K8S HOODIE"</h3>
                     <p>Deploy in comfort.</p>
-                    <div class="product-price">$20.00</div>
+                    <div class="product-price">RS 20.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Likhil's Cap</h3>
                     <p>Containerize your head.</p>
-                    <div class="product-price">$50.00</div>
+                    <div class="product-price">RS 50.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Terraform Mug</h3>
                     <p>Infrastructure as Coffee.</p>
-                    <div class="product-price">$99.99</div>
+                    <div class="product-price">Rs 99.99 </div>
                 </div>
                 <div class="product-card">
                     <h3>AWS Sticker Pack</h3>
                     <p>Stick to the cloud.</p>
-                    <div class="product-price">$5.00</div>
+                    <div class="product-price">Rs 50.00</div>
                 </div>
                 <div class="product-card">
                     <h3>CI/CD T-Shirt</h3>
                     <p>Automate your wardrobe changes.</p>
-                    <div class="product-price">$35.00</div>
-                    <div class="product-actions"><button class="add-to-cart-btn" onclick="event.stopPropagation(); alert('Added to cart!')">🛒 Add to Cart</button></div>
+                    <div class="product-price">Rs 35.00</div>
                 </div>
             </div>
         </div>
