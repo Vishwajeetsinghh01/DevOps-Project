@@ -99,27 +99,62 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>"SUPER K8S HOODIE"</h3>
                     <p>Deploy in comfort.</p>
-                    <div class="product-price">RS 20.00</div>
+                    <div class="product-price">$20.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Likhil's Cap</h3>
                     <p>Containerize your head.</p>
-                    <div class="product-price">RS 50.00</div>
+                    <div class="product-price">$50.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Terraform Mug</h3>
                     <p>Infrastructure as Coffee.</p>
-                    <div class="product-price">Rs 99.99 </div>
+                    <div class="product-price">$99.99 </div>
                 </div>
                 <div class="product-card">
                     <h3>AWS Sticker Pack</h3>
                     <p>Stick to the cloud.</p>
-                    <div class="product-price">Rs 50.00</div>
+                    <div class="product-price">$50.00</div>
                 </div>
                 <div class="product-card">
                     <h3>CI/CD T-Shirt</h3>
                     <p>Automate your wardrobe changes.</p>
-                    <div class="product-price">Rs 35.00</div>
+                    <div class="product-price">$35.00</div>
+                </div>
+                <div class="product-card">
+                    <h3>Jenkins Build Mug</h3>
+                    <p>Start your day with a green build.</p>
+                    <div class="product-price">$15.00</div>
+                </div>
+                <div class="product-card">
+                    <h3>Git Merge Conflict T-Shirt</h3>
+                    <p>Warning: May cause anxiety.</p>
+                    <div class="product-price">$25.00</div>
+                </div>
+                <div class="product-card">
+                    <h3>Prometheus Monitor Pin</h3>
+                    <p>Keep an eye on your metrics.</p>
+                    <div class="product-price">$8.00</div>
+                </div>
+                <div class="product-card">
+                    <h3>Docker Whale Plush</h3>
+                    <p>Cuddle with your containers.</p>
+                    <div class="product-price">$29.99</div>
+                </div>
+                <div class="product-card">
+                    <h3>Root User Hoodie</h3>
+                    <p>With great power comes great sudo.</p>
+                    <div class="product-price">$45.00</div>
+                </div>
+                <div class="product-card">
+                    <h3>Cloud Native Bottle</h3>
+                    <p>Stay hydrated with serverless water.</p>
+                    <div class="product-price">$18.50</div>
+                </div>
+                <div class="product-card">
+                    <h3>Legacy Code Extinguisher</h3>
+                    <p>For when production is on fire.</p>
+                    <div class="product-price">$150.00</div>
                 </div>
             </div>
         </div>
