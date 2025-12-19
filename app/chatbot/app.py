@@ -15,8 +15,9 @@ def chat():
     
     # Logic Engine
     response_text = "I am not sure how to help with that."
-    
-    if "price" in message:
+    if "hello" in message or "hi" in message:
+        response_text = "Hello! Welocme to the DevOps strore. How can I help you with your order?"
+    elif "price" in message:
         response_text = "Our prices are competitive! The Docker shirt is $25."
     elif "shipping" in message:
         response_text = "We ship worldwide via AWS Logistics (3-5 days)."

@@ -99,32 +99,32 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>"SUPER K8S HOODIE"</h3>
                     <p>Deploy in comfort.</p>
-                    <div class="product-price">$20.00</div>
+                    <div class="product-price">$80.00</div>
                 </div>
                 <div class="product-card">
-                    <h3>Likhil's Cap</h3>
+                    <h3>Linux Cap</h3>
                     <p>Containerize your head.</p>
                     <div class="product-price">$50.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Terraform Mug</h3>
                     <p>Infrastructure as Coffee.</p>
-                    <div class="product-price">$99.99 </div>
+                    <div class="product-price">$15.99 </div>
                 </div>
                 <div class="product-card">
                     <h3>AWS Sticker Pack</h3>
                     <p>Stick to the cloud.</p>
-                    <div class="product-price">$50.00</div>
+                    <div class="product-price">$25.00</div>
                 </div>
                 <div class="product-card">
                     <h3>CI/CD T-Shirt</h3>
                     <p>Automate your wardrobe changes.</p>
-                    <div class="product-price">$35.00</div>
+                    <div class="product-price">$45.00</div>
                 </div>
                 <div class="product-card">
-                    <h3>Jenkins Build Mug</h3>
+                    <h3>Jenkins Build Shoe</h3>
                     <p>Start your day with a green build.</p>
-                    <div class="product-price">$15.00</div>
+                    <div class="product-price">$60.00</div>
                 </div>
                 <div class="product-card">
                     <h3>Git Merge Conflict T-Shirt</h3>
@@ -149,7 +149,7 @@ DASHBOARD_PAGE = """
                 <div class="product-card">
                     <h3>Cloud Native Bottle</h3>
                     <p>Stay hydrated with serverless water.</p>
-                    <div class="product-price">$18.50</div>
+                    <div class="product-price">$20.50</div>
                 </div>
                 <div class="product-card">
                     <h3>Legacy Code Extinguisher</h3>
