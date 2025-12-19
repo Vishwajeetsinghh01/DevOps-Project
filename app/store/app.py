@@ -5,119 +5,111 @@ import os
 app = Flask(__name__)
 app.secret_key = 'devops-secret-key'
 
-# This is where your chatbot.py is running
 CHATBOT_SERVICE_HOST = os.getenv('CHATBOT_URL', 'http://127.0.0.1:5001')
 
-# --- THE COMPLETE CSS (Login + Dashboard + Chat) ---
+# --- TECH-CENTRIC INDIGO STYLES ---
 STYLES = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
     :root {
-        --primary: #6366f1;
-        --primary-dark: #4f46e5;
+        --primary: #4f46e5;    /* Indigo */
+        --primary-light: #6366f1;
+        --accent: #0ea5e9;     /* Sky Blue for Cart/Actions */
+        --success: #10b981;    /* Emerald for Buy buttons */
         --bg-main: #f8fafc;
-        --bg-sidebar: #0f172a;
-        --text-dark: #1e293b;
-        --card-bg: #ffffff;
+        --bg-dark: #0f172a;    /* Slate 900 */
     }
 
-    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: var(--bg-main); color: var(--text-dark); }
+    body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-main); color: #1e293b; }
 
-    /* --- LOGIN PAGE STYLES --- */
+    /* --- LOGIN PAGE --- */
     .login-container { 
         display: flex; justify-content: center; align-items: center; height: 100vh; 
         background: radial-gradient(circle at top left, #1e293b, #0f172a);
     }
     .login-box { 
-        background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
-        padding: 40px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
-        width: 350px; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: white;
+        background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
+        padding: 45px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+        width: 360px; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: white;
     }
-    .login-box h2 { font-weight: 600; margin-bottom: 20px; letter-spacing: -1px; }
     .login-box input { 
-        width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; box-sizing: border-box;
-        border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;
+        width: 100%; padding: 14px; margin: 12px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.05); color: white; outline: none; box-sizing: border-box;
     }
     .login-box button { 
-        width: 100%; padding: 12px; background: var(--primary); color: white; 
-        border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s;
+        width: 100%; padding: 14px; background: var(--primary); color: white; 
+        border: none; border-radius: 12px; cursor: pointer; font-weight: 700; transition: 0.3s; margin-top: 10px;
     }
-    .login-box button:hover { background: var(--primary-dark); }
+    .login-box button:hover { background: var(--primary-light); transform: translateY(-2px); }
 
-    /* --- DASHBOARD STYLES --- */
-    .main-content { padding: 40px; max-width: 1200px; margin: 0 auto; height: 100vh; overflow-y: auto; }
-    .navbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+    /* --- DASHBOARD & NAVBAR --- */
+    .main-content { padding: 40px; max-width: 1300px; margin: 0 auto; }
+    .navbar { 
+        display: flex; justify-content: space-between; align-items: center; 
+        background: white; padding: 20px 40px; border-radius: 20px; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 40px; border: 1px solid #e2e8f0;
+    }
+    .cart-btn {
+        background: var(--bg-dark); color: white; padding: 12px 24px; 
+        border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s;
+    }
+    .cart-btn:hover { background: var(--primary); }
+
+    /* --- PRODUCT GRID --- */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
     .product-card { 
-        background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: all 0.3s ease;
+        background: white; border-radius: 20px; overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        border: 1px solid #e2e8f0; position: relative;
     }
-    .product-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-    .product-price { color: var(--primary); font-weight: 600; font-size: 1.4em; margin-top: 15px; }
+    .product-card:hover { transform: translateY(-12px); box-shadow: 0 20px 30px rgba(0,0,0,0.08); border-color: var(--primary-light); }
+    .product-info { padding: 25px; }
+    .product-price { color: var(--primary); font-weight: 800; font-size: 1.6em; margin: 15px 0; }
+    .order-btn { 
+        width: 100%; padding: 12px; background: var(--success); color: white; 
+        border: none; border-radius: 12px; cursor: pointer; font-weight: 700; transition: 0.3s;
+    }
+    .order-btn:hover { background: #059669; filter: brightness(1.1); }
 
-    /* --- FLOATING DRAGGABLE CHATBOT --- */
-    #chatWidget { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
+    /* --- DRAGGABLE CHAT --- */
+    #chatWidget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
     .chat-window {
-        width: 340px; height: 480px; background: white; border-radius: 16px;
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); display: none; flex-direction: column;
-        overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 15px;
+        width: 360px; height: 520px; background: white; border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15); display: none; flex-direction: column;
+        overflow: hidden; border: 1px solid #e2e8f0;
     }
-    .chat-header { 
-        padding: 15px; background: var(--bg-sidebar); color: white; 
-        display: flex; justify-content: space-between; cursor: move; align-items: center;
-    }
-    .chat-history { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f1f5f9; }
-    .chat-input-area { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #e2e8f0; background: white; }
-    .chat-input-area input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; }
+    .chat-header { padding: 18px 24px; background: var(--bg-dark); color: white; cursor: move; display: flex; justify-content: space-between; align-items: center; }
+    .chat-history { flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 12px; }
+    .chat-input-area { padding: 18px; display: flex; gap: 12px; background: white; border-top: 1px solid #f1f5f9; }
+    .chat-input-area input { flex: 1; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; outline: none; background: #f8fafc; }
     .chat-fab {
-        width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
+        width: 65px; height: 65px; background: var(--primary); border-radius: 22px; /* Squircle shape */
         display: flex; justify-content: center; align-items: center; color: white;
-        font-size: 24px; cursor: pointer; box-shadow: 0 10px 15px rgba(99, 102, 241, 0.4); transition: transform 0.2s;
+        font-size: 28px; cursor: pointer; box-shadow: 0 12px 24px rgba(79, 70, 229, 0.3); margin-left: auto; transition: 0.3s;
     }
-    .chat-fab:hover { transform: scale(1.1); }
+    .chat-fab:hover { transform: rotate(-10deg) scale(1.1); background: var(--accent); }
 
-    /* Message Bubbles */
-    .msg { padding: 10px 14px; border-radius: 12px; font-size: 13px; max-width: 80%; line-height: 1.4; }
-    .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-    .msg.bot { background: white; color: #1e293b; align-self: flex-start; border: 1px solid #e2e8f0; border-bottom-left-radius: 2px; }
+    .msg { padding: 12px 16px; border-radius: 16px; font-size: 13.5px; max-width: 80%; line-height: 1.5; }
+    .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .msg.bot { background: white; color: #334155; align-self: flex-start; border: 1px solid #e2e8f0; border-bottom-left-radius: 4px; }
 </style>
-"""
-
-# --- PAGE TEMPLATES ---
-
-LOGIN_PAGE = """
-<!DOCTYPE html>
-<html>
-<head><title>Login | DevOps Store</title>""" + STYLES + """</head>
-<body>
-    <div class="login-container">
-        <div class="login-box">
-            <div style="font-size: 40px; margin-bottom: 10px;">☁️</div>
-            <h2>DevOps Portal</h2>
-            <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Secure Management Access</p>
-            <form action="/login" method="post">
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Sign In</button>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
 """
 
 DASHBOARD_PAGE = """
 <!DOCTYPE html>
 <html>
-<head><title>Cloud Store Dashboard</title>""" + STYLES + """</head>
+<head><title>DevOps Infrastructure Store</title>""" + STYLES + """</head>
 <body>
     <div class="main-content">
         <div class="navbar">
-            <h1>🛍️ Cloud Catalog</h1>
-            <div>
-                <span>Welcome, <strong>{{ username }}</strong></span>
-                <a href="/logout" style="margin-left: 15px; color: #ef4444; text-decoration: none; font-weight: 600;">Logout</a>
+            <h2 style="margin:0; display:flex; align-items:center; gap:10px; color:var(--bg-dark)">
+                <span style="color:var(--primary)">⚡</span> DevOps Gear
+            </h2>
+            <div style="display:flex; align-items:center; gap:25px;">
+                <span style="font-size:14px; color:#64748b">Operator: <strong style="color:var(--bg-dark)">{{ username }}</strong></span>
+                <a href="#" class="cart-btn" onclick="alert('Cart system initialized!')">🛒 Cart (0)</a>
+                <a href="/logout" style="color:#ef4444; text-decoration:none; font-size:14px; font-weight:700;">Sign Out</a>
             </div>
         </div>
 
@@ -128,13 +120,22 @@ DASHBOARD_PAGE = """
                 ('Terraform Mug', 'Infrastructure as Coffee.', '$15.99'),
                 ('AWS Sticker Pack', 'Stick to the cloud.', '$25.00'),
                 ('CI/CD T-Shirt', 'Automate your wardrobe.', '$45.00'),
-                ('Docker Whale Plush', 'Cuddle your containers.', '$29.99')
+                ('Jenkins Build Shoe', 'Walk the pipeline.', '$60.00'),
+                ('Git Conflict Tee', 'Warning: High Anxiety.', '$25.00'),
+                ('Prometheus Pin', 'Monitor your lapel.', '$8.00'),
+                ('Docker Whale Plush', 'Cuddle containers.', '$29.99'),
+                ('Root User Hoodie', 'With great sudo power.', '$45.00'),
+                ('Cloud Native Bottle', 'Hydrate your clusters.', '$20.50'),
+                ('Code Extinguisher', 'For prod hotfixes.', '$150.00')
             ] %}
             {% for name, desc, price in items %}
             <div class="product-card">
-                <h3>{{ name }}</h3>
-                <p>{{ desc }}</p>
-                <div class="product-price">{{ price }}</div>
+                <div class="product-info">
+                    <h3 style="margin:0 0 8px 0; font-size:18px;">{{ name }}</h3>
+                    <p style="color:#64748b; font-size:13px; line-height:1.4;">{{ desc }}</p>
+                    <div class="product-price">{{ price }}</div>
+                    <button class="order-btn" onclick="alert('{{ name }} added to deployment queue!')">Order Now</button>
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -143,15 +144,15 @@ DASHBOARD_PAGE = """
     <div id="chatWidget">
         <div id="chatWindow" class="chat-window">
             <div id="chatHeader" class="chat-header">
-                <span>🤖 AI Support</span>
-                <span onclick="toggleChat()" style="cursor:pointer">✖</span>
+                <span style="font-weight:700;">🤖 System Support</span>
+                <span onclick="toggleChat()" style="cursor:pointer; opacity:0.7">✖</span>
             </div>
             <div id="chat-history" class="chat-history">
-                <div class="msg bot">Hello {{ username }}! How can I help with your order?</div>
+                <div class="msg bot">System ready. Hello {{ username }}, how can I assist with your provisioning today?</div>
             </div>
             <div class="chat-input-area">
                 <input type="text" id="msgInput" placeholder="Ask a question..." onkeypress="handleEnter(event)">
-                <button onclick="send()" style="border:none; background:none; cursor:pointer; font-size: 20px;">🚀</button>
+                <button onclick="send()" style="border:none; background:none; cursor:pointer; font-size:22px; color:var(--primary)">🚀</button>
             </div>
         </div>
         <div class="chat-fab" onclick="toggleChat()">💬</div>
@@ -184,7 +185,7 @@ DASHBOARD_PAGE = """
                 const data = await res.json();
                 history.innerHTML += `<div class="msg bot">${data.response}</div>`;
             } catch (e) {
-                history.innerHTML += `<div class="msg bot" style="color:red">Bot Offline</div>`;
+                history.innerHTML += `<div class="msg bot" style="color:#ef4444">Connection Error: Bot Offline</div>`;
             }
             history.scrollTop = history.scrollHeight;
         }
@@ -195,7 +196,6 @@ DASHBOARD_PAGE = """
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             const header = document.getElementById("chatHeader");
             header.onmousedown = dragMouseDown;
-
             function dragMouseDown(e) {
                 e.preventDefault();
                 pos3 = e.clientX; pos4 = e.clientY;
@@ -216,36 +216,3 @@ DASHBOARD_PAGE = """
 </body>
 </html>
 """
-
-# --- BACKEND ROUTES ---
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('home'))
-    return render_template_string(LOGIN_PAGE)
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('login'))
-
-@app.route('/')
-def home():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    return render_template_string(DASHBOARD_PAGE, username=session['username'])
-
-@app.route('/api/chat', methods=['POST'])
-def proxy_chat():
-    user_data = request.get_json()
-    try:
-        # Calls the external chatbot microservice
-        response = requests.post(f"{CHATBOT_SERVICE_HOST}/chat", json=user_data, timeout=3)
-        return jsonify(response.json())
-    except:
-        return jsonify({"response": "⚠️ Service Offline. Check chatbot.py on port 5001."}), 503
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
