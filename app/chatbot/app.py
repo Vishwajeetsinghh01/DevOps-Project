@@ -14,7 +14,7 @@ def chat():
     message = data.get('message', '').lower()
     
     # Logic Engine
-    response_text = "I am not sure how to help with that."
+    response_text = "Hello! Welocme to the DevOps strore. How can I help you with your order?"
     if "hello" in message or "hi" in message:
         response_text = "Hello! Welocme to the DevOps strore. How can I help you with your order?"
     elif "price" in message:
