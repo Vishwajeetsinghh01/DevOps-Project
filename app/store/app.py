@@ -216,3 +216,38 @@ DASHBOARD_PAGE = """
 </body>
 </html>
 """
+# --- ROUTES ---
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('home'))
+    return render_template_string(LOGIN_PAGE)
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
+@app.route('/')
+def home():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template_string(DASHBOARD_PAGE, username=session['username'])
+
+@app.route('/api/chat', methods=['POST'])
+def proxy_chat():
+    user_data = request.get_json()
+    try:
+        response = requests.post(f"{CHATBOT_SERVICE_HOST}/chat", json=user_data, timeout=3)
+        return jsonify(response.json())
+    except:
+        return jsonify({"response": "⚠️ AI Service Unavailable"}), 503
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "healthy"}), 200
+
+if _name_ == '_main_':
+    app.run(host='0.0.0.0', port=5000)
