@@ -249,5 +249,5 @@ def proxy_chat():
 def health():
     return jsonify({"status": "healthy"}), 200
 
-if _name_ == '_main_':
+if _name_ == '__main__':
     app.run(host='0.0.0.0', port=5000)
