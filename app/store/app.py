@@ -141,7 +141,7 @@ DASHBOARD_PAGE = """
         <div class="product-grid">
             {% set items = [
                 ('Super K8s Hoodie', 'Premium deployment comfort.', '$80.00'),
-                ('Linux Cap', 'Containerize your head.', '$50.00'),
+                ('Linux Cap', 'Containerize your head.', '$40.00'),
                 ('Terraform Mug', 'Infrastructure as Coffee.', '$15.99'),
                 ('AWS Sticker Pack', 'Stick to the cloud.', '$25.00'),
                 ('CI/CD T-Shirt', 'Automate your wardrobe.', '$45.00'),
