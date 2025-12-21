@@ -5,7 +5,8 @@ import os
 app = Flask(__name__)
 app.secret_key = 'devops-secret-key'
 
-CHATBOT_SERVICE_HOST = os.getenv('CHATBOT_URL', 'http://127.0.0.1:5001')
+# Configurable Chatbot URL
+CHATBOT_SERVICE_HOST = os.getenv('CHATBOT_URL', 'http://chatbot:5000')
 
 # --- TECH-CENTRIC INDIGO STYLES ---
 STYLES = """
@@ -96,6 +97,30 @@ STYLES = """
 </style>
 """
 
+# --- LOGIN PAGE (This was missing!) ---
+LOGIN_PAGE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - DevOps Store</title>
+    """ + STYLES + """
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2 style="margin-bottom:10px">🔐 Access Control</h2>
+            <p style="opacity:0.7; margin-bottom:20px">Please sign in to access the provisioning dashboard.</p>
+            <form method="post">
+                <input type="text" name="username" placeholder="Enter Operator ID" required>
+                <button type="submit">Authenticate</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+# --- DASHBOARD PAGE ---
 DASHBOARD_PAGE = """
 <!DOCTYPE html>
 <html>
@@ -216,6 +241,7 @@ DASHBOARD_PAGE = """
 </body>
 </html>
 """
+
 # --- ROUTES ---
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -249,5 +275,5 @@ def proxy_chat():
 def health():
     return jsonify({"status": "healthy"}), 200
 
-if _name_ == '__main__':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
