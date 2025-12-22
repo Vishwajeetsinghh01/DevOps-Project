@@ -97,7 +97,7 @@ STYLES = """
 </style>
 """
 
-# --- LOGIN PAGE (This was missing!) ---
+# --- LOGIN PAGE ---
 LOGIN_PAGE = """
 <!DOCTYPE html>
 <html>
