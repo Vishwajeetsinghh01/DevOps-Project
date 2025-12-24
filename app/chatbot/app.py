@@ -5,9 +5,10 @@ import os
 app = Flask(__name__)
 
 # Initialize NVIDIA OpenAI Client
+# Note: In a real job, use os.getenv('NVIDIA_API_KEY') instead of hardcoding!
 client = OpenAI(
-  api_key="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",
-  base_url="https://integrate.api.nvidia.com/v1"
+    api_key="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",
+    base_url="https://integrate.api.nvidia.com/v1"
 )
 
 @app.route('/chat', methods=['POST'])
@@ -17,7 +18,6 @@ def chat():
 
     try:
         # Using meta/llama-3.1-8b-instruct for chat completion
-        # This model is optimized for chat interactions
         completion = client.chat.completions.create(
             model="meta/llama-3.1-8b-instruct",
             messages=[{"role": "user", "content": user_message}],
