@@ -45,7 +45,7 @@ def chat():
             response_text = "Our prices are competitive! Which specific item are you asking about?"
 
     # 3. Shipping & Returns
-    elif "shipping" in message:
+      elif "shipping" in message:
         response_text = "We ship worldwide via AWS Logistics. You can expect your order in 3-5 business days."
     elif "return" in message:
         response_text = "We offer a 30-day return policy on all DevOps gear if you aren't satisfied."
